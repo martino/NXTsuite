@@ -37,17 +37,14 @@ TouchImpl = Ext.extend(Ext.Panel, {
 	},
     onAction : function(type, e) {
 		if(type=='doubletap'){
-			console.log(type);
-			console.log("stop");
-		Ext.Ajax.request({
-			url:'NXTconnect/stop',
-			success: function(response,opts){
-				console.log(response);
-			}
-		});
+			Ext.Ajax.request({
+				url:'NXTconnect/stop',
+				success: function(response,opts){
+				}
+			});
 		}
 		if(type=='touchstart'){
-			console.log(type+" x:"+e.pageX+" y:"+e.pageY);
+			//console.log(type+" x:"+e.pageX+" y:"+e.pageY);
 			this.startX = e.pageX;
 			this.startY = e.pageY;
 		}
@@ -89,16 +86,16 @@ TouchImpl = Ext.extend(Ext.Panel, {
 			}
 
 			if(powerL != -1){
-			console.log(move);
+			//console.log(move);
 			var moveURL = 'NXTconnect/goMotor?powerL='+powerL+'&powerR='+powerR;
-			console.log("ajax request");
-            console.log(moveURL);
+			//console.log("ajax request");
+            //console.log(moveURL);
 			Ext.Ajax.request({
                 		url: moveURL,
                 		success: function(response, opts) {
-					console.log(response);
-					console.log("ajax success");
-                	}
+							//console.log(response);
+							//console.log("ajax success");
+                		}
             		});
 			}
 	}
@@ -106,9 +103,9 @@ TouchImpl = Ext.extend(Ext.Panel, {
 		Ext.Ajax.request({
             		url: "NXTconnect/shot",
             		success: function(response, opts) {
-				console.log(response);
-				console.log("ajax success");
-            	}
+						//console.log(response);
+						//console.log("ajax success");
+            		}
         		});
 		}	
 });
