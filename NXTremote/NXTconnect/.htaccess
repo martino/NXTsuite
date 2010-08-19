@@ -1,0 +1,4 @@
+#ridirige tutte le richieste al file index.php, una specie di frontcontroller        
+Rewriteengine On                                                                     
+		                                                                           
+RewriteRule ^(.*)$ index.php

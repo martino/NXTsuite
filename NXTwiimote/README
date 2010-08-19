@@ -1,0 +1,29 @@
+=== NXTwiimote ===
+
+-- INFO --
+
+Questo client ci permette di comandare il robot NXT utilizzando il WiiMote
+
+
+-- INSTALLAZIONE -- 
+
+Sono richieste le seguenti librerie:
+ * pygtk
+ * python-libxml2
+ * nxt-python
+ * python-cwiid
+ * python-twisted
+
+Sistemare il file conf.xml inserendo l'indirizzo del server NXT
+
+Lanciare il programma:
+  > python NXTwiimote.py
+
+Collegare il WiiMote
+
+Collegare il server NXT
+
+Scegliere il modo di guida e tutto parte
+
+
+

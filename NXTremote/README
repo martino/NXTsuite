@@ -1,0 +1,22 @@
+=== NXTremote ===
+
+-- INFO --
+
+E` l'applicazione per dispositivi iOS e Android, con questo client si possono impartire 
+gli ordini al robot grazie al touchscreen.
+
+-- INSTALLAZIONE --
+
+Per riuscire ad utilizzare l'applicazione sul proprio terminalei bisogna seguire questi
+semplici passi
+
+- Copiare la cartella in un server web, con il supporto PHP e per i file htaccess
+- Inserire nel file NXTconnect/index.php le due variabili:
+    * serverAddress
+    * serverPort
+  le informazioni corrette riguardo il proprio NXTserver
+- Per i terminali iOS consiglio di aggiungere l'applicazione come preferita in homepage
+  in questo modo le volte seguenti risulta essere indipendente dal browser
+
+
+

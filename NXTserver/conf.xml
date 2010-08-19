@@ -1,0 +1,13 @@
+<nxtconf>
+    <nxt addr="BTADDR"/>
+    <sensors>
+        <ultrasonic port="4"/>
+        <color port="3"/>
+    </sensors>
+
+    <motors>
+        <left port="C"/>
+        <right port="B"/>
+        <center port="A"/>
+    </motors>
+</nxtconf>

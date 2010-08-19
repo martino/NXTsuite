@@ -1,0 +1,21 @@
+=== NXTserver ===
+
+-- INFO -- 
+
+Ha il compito di collegarsi con il Mindstorm e di rendere disponibile il suo controllo tramite xml-rpc.
+Nel file di configurazione(conf.xml) sono specificate le porte in cui sono attaccati i vari sensori e 
+motori sul NXT.
+
+-- INSTALLAZIONE -- 
+
+Sono richieste le seguenti librerie:
+ * nxt-python
+ * python-libxml2
+ * python-twisted
+
+Nel conf.xml bisogna specificare le porte corrette in base al robot e si avvia il programma con
+    python NXTserver.py
+
+Il server sara` raggiungibile sulla porta 8088 della macchina in cui e` eseguito.
+
+

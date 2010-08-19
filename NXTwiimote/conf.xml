@@ -1,0 +1,4 @@
+<NXTclient>
+    <server addr="http://localhost:8088"/>
+
+</NXTclient>
