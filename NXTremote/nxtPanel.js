@@ -2,6 +2,21 @@ nxtTabPanel = Ext.extend(Ext.TabPanel, {
 	initComponent: function(){
 		// definisco tutti i componenti del pannello NXT
 		
+		//funzione per aggiornare la distanza
+		this.updateDistance = function(){
+				this.distanza = this.distanza +1;
+				URL = 'NXTconnect/ultrasonicStatus';
+				Ext.Ajax.request({
+		        	url: URL,
+					success: function(response, opts) {
+						var txtResponse = 12;
+						var txt = "Distanza: "+response.responseText;
+						Ext.getCmp('ustext').setTitle(txt);
+					}
+				});
+				this.task.delay(2000);
+		}
+		
 		//toolbar Superiore
 		this.buttonConnection = new Ext.Button({
 			ui:'action',
@@ -36,6 +51,9 @@ nxtTabPanel = Ext.extend(Ext.TabPanel, {
 			},
 			html:'<h5>Collegati con il NXT</h5>'
 		});
+		
+		
+		
 		this.tabBar = {dock:'bottom', layout:{pack:'center'}};
 		this.dockedItems = [tbMain];
 		this.fullscreen = true;
@@ -52,27 +70,13 @@ nxtTabPanel = Ext.extend(Ext.TabPanel, {
 		});
 	},
 	createSensorPanel: function(){
-			this.updateDistance = function(){
-					this.distanza = this.distanza +1;
-					URL = 'NXTconnect/ultrasonicStatus';
-					Ext.Ajax.request({
-			        	url: URL,
-						success: function(response, opts) {
-							console.log("ultrasonic " +response);
-							var txtResponse = 12;
-							var txt = "Distanza: "+response.responseText;
-							console.log(txt);
-							Ext.getCmp('ustext').setTitle(txt);
-
-						}
-					});
-					this.task.delay(1000);
-			}
+			
 			var bCheckDistance = new Ext.Button({
 				text:'Controlla Distanza',
 				id:'bCD',
 				ui: 'action_round'
 			});
+			
 			bCheckDistance.setHandler(this.checkDistance, this);
 
 			var bSlow = new Ext.Button({
@@ -92,13 +96,13 @@ nxtTabPanel = Ext.extend(Ext.TabPanel, {
 			bFast.setHandler(this.setSpeed, this);
 
 			this.dockedBottom = new Ext.Toolbar({
-		            dock: 'bottom',
+		        dock: 'bottom',
 			    xtype: 'toolbar',
 				id:'actionText',
 				title:'Velocita`: Normale',
-		            ui: 'light',
-		    	    items:[{xtype:'spacer'}]
-			    });
+		        ui: 'light',
+		    	items:[{xtype:'spacer'}]
+			});
 
 			//pannello
 			this.pSensor = new Ext.Panel({
@@ -126,7 +130,7 @@ nxtTabPanel = Ext.extend(Ext.TabPanel, {
 	checkDistance: function(button, event){
 		if(!this.distance){
 			//parte
-			this.task.delay(1000);
+			this.task.delay(2000);
 			Ext.getCmp('bCD').setText("Ferma il controllo distanza");
 		}else{
 			//si ferma
@@ -135,6 +139,7 @@ nxtTabPanel = Ext.extend(Ext.TabPanel, {
 			Ext.getCmp('ustext').setTitle("Distanza: OFF");
 		}
 		this.distance = !this.distance;
+		
 	},
 	setSpeed: function(button, event){
 		if(button.text == "Lento")
@@ -148,19 +153,23 @@ nxtTabPanel = Ext.extend(Ext.TabPanel, {
 	},
 
 	connectionHandler: function(button, event){
+			this.buttonConnection.disable();
+			
 			var URL = '';
 			if(this.connected){
 				URL = 'NXTconnect/disconnect';
+				if(this.distance){
+					this.task.cancel();
+					this.distance = !this.distance;
+				}
 			}else{
 				URL = 'NXTconnect/connect';
 			}
-			console.log(URL);
 			Ext.Ajax.request({
 	        	url: URL,
 				scope:this,
 	            success: function(response, opts) {
 					if(URL == 'NXTconnect/connect'){
-						console.log(response);
 						if(response.responseText == 1){
 							// connesso
 							//pannello dei movimenti
@@ -187,13 +196,11 @@ nxtTabPanel = Ext.extend(Ext.TabPanel, {
 							this.pInfo.update("<h5>Disconnesso</h5>");
 							this.doLayout();
 							this.remove(this.pMove, false);
+							this.pSensor.remove(Ext.getCmp('bCD'),true);
 							this.remove(this.pSensor, false);
 							this.doLayout();
 							this.buttonConnection.setText('On');
 							this.connected = false;
-							this.task.cancel();
-							Ext.getCmp('bCD').setText("Controlla la distanza");
-							Ext.getCmp('ustext').setTitle("Distanza: OFF");
 						}else{
 							//disconnessione fallita
 							this.setCard(0);
@@ -201,12 +208,17 @@ nxtTabPanel = Ext.extend(Ext.TabPanel, {
 							this.doLayout();
 						}
 					}
+					this.buttonConnection.enable();
+					
 	            },
 				failure: function (response, opts){
 					this.pInfo.update("<h5>Errore di comunicazione con il server</h5>");
 					this.doLayout();
+					this.buttonConnection.enable();
+					
 				}
 	        });
-			console.log(this.connected);
+	
+			
 	},
 });
