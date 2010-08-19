@@ -1,7 +1,7 @@
 <?php
 include('xmlrpc.inc');
 
-$serverAddress = "192.168.5.108";
+$serverAddress = "192.168.5.107";
 $serverPort = 8088;
 $serverPage = "";
 $url = parse_url($_SERVER['REQUEST_URI']);
@@ -28,7 +28,7 @@ if (!$r->faultCode()) {
         print $r->value()->scalarVal();
 }else{
 	print $r->faultCode();
-
+}
 
 
 ?>

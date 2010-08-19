@@ -191,6 +191,9 @@ nxtTabPanel = Ext.extend(Ext.TabPanel, {
 							this.doLayout();
 							this.buttonConnection.setText('On');
 							this.connected = false;
+							this.task.cancel();
+							Ext.getCmp('bCD').setText("Controlla la distanza");
+							Ext.getCmp('ustext').setTitle("Distanza: OFF");
 						}else{
 							//disconnessione fallita
 							this.setCard(0);
