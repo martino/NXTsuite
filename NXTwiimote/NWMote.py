@@ -152,7 +152,7 @@ class NWMote(object):
         #analizzo i messaggi
         try:
             curr = time.time()
-            if curr - self.last > 0.2:
+            if curr - self.last > 0.15:
                 roll, pitch = self.get_pitch_roll()
                 tmp = 0
                 if self.tcontrol == 1: #mario kart type [bottoni]
